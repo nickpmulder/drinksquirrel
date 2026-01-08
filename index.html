@@ -40,7 +40,117 @@
            
             
 
+           
+
+
             <div class="calculator">
+                <h4 class="mono gray">Correct Gravity for Temperature</h4> 
+                
+                
+                <div id="calc-correct-p" style="display: block;">
+                    <label>Gravity:</label><br><br> 
+                        <div class="unit2">
+                            <input type="number" class="input1" name="input" id="gravity-p" placeholder="12"> 
+                            <p class="smallBlack">°P</p></div><br><br> 
+                    <label>Temperature of Liquid:</label><br><br> 
+                        <div class="unit1">
+                            <input type="number" class="input1" name="input" id="temp-p" placeholder="75" > 
+                            <p class="smallBlack">°F</p></div><br><br> 
+                    <label>Calibration Temp of Hydrometer:</label><br><br> 
+                        <div class="unit1">
+                            <input type="number" class="input1" name="input" id="cal-temp-p" value="68"> 
+                            <p class="smallBlack">°F</p></div><br><br> 
+                   
+                    <button class="button" onclick="tempCorrect()"><p class="smallBlack">enter</p></button><br>
+
+                     <label>Corrected gravity:</label><br><br> 
+                        <div class="answers2">
+                            <span class="answerText" id="corrected-p"> </span> 
+                            <span class="smallBlack">°P</span></div></div> 
+
+
+                            
+                <div id="calc-correct-s" style="display: none;">
+                    <label>Gravity:</label><br><br> 
+                    <div class="unit2">
+                        <input type="number" class="input1" name="input" id="gravity-s" placeholder="1.050"> 
+                        <p class="smallBlack">Specific Gravity</p></div><br><br> 
+                <label>Temperature of Liquid:</label><br><br> 
+                    <div class="unit1">
+                        <input type="number" class="input1" name="input" id="temp-s" placeholder="75"> 
+                        <p class="smallBlack">°F</p></div><br><br> 
+                <label>Calibration Temp of Hydrometer:</label><br><br> 
+                    <div class="unit1">
+                        <input type="number" class="input1" name="input" id="cal-temp-s" value="68"> 
+                        <p class="smallBlack">°F</p></div><br><br> 
+               
+                <button class="button" onclick="tempCorrect()"><p class="smallBlack">enter</p></button><br>
+
+                 <label>Corrected gravity:</label><br><br> 
+                    <div class="answers2">
+                        <span class="answerText" id="corrected-s"> </span> 
+                        <span class="smallBlack">Specific Gravity</span></div></div> 
+                        
+                </div>
+
+
+<br>    <script>  
+        function changeUnitsCorrect() {
+            if (document.getElementById("plato").checked){
+                    document.getElementById("calc-correct-p").style = "display: block;";
+                    document.getElementById("calc-correct-s").style = "display: none;"}
+            if (document.getElementById("specific").checked){
+                        document.getElementById("calc-correct-s").style = "display: block;";
+                        document.getElementById("calc-correct-p").style = "display: none;"}
+
+
+        }
+        function tempCorrect() {
+            
+                       
+                
+                    if (document.getElementById("specific").checked){
+                       
+                        var r = document.getElementById('gravity-s').value;
+                        var t = document.getElementById('temp-s').value;
+                        var c = document.getElementById('cal-temp-s').value;
+           
+
+                       var  CGS = r * ((1.00130346 - (0.000134722124 * t) + (0.00000204052596 * t**2) - (0.00000000232820948 * t**3)) / (1.00130346 - (0.000134722124 * c) + (0.00000204052596 * c**2) - (0.00000000232820948 * c**3)))  ;                      
+                       var CGshortS = CGS.toFixed(4);
+                    document.getElementById("corrected-s").innerHTML = CGshortS;
+
+
+                    }
+                
+                    if (document.getElementById("plato").checked){
+                        let apb = Number(document.getElementById('gravity-p').value);
+                        let tP = (Number(document.getElementById('temp-p').value)-32)*(5/9);
+                        let cP = (Number(document.getElementById('cal-temp-p').value)-32)*(5/9);
+                        let temp = tP-cP;
+                        let correction =  0.0000006907947565 * temp**4 + 0.0000008650898228 * temp**3 * apb + 0.0000002111610273 * temp**2 * apb**2 - 0.000000420289855 * temp * apb**3 + 0.0000000000000000003388131789 * temp**4 - 0.00002646880494 * temp**3 - 0.00003812273795 * temp**2 * apb + 0.00002132555958 * temp * apb**2 + 0.0000003140096619 * apb**3 + 0.001470413886 * temp**2 + 0.0003854292164 * temp * apb - 0.00001254869767 * apb**2 + 0.04799327348 * temp + 0.0002013056055 * apb - 0.002157758291;
+                        let CGP = Number(apb)+Number(correction);
+                        console.log(CGP);
+                        console.log(apb);
+                        console.log(correction);
+                        var CGshortP = CGP.toFixed(4);
+                        document.getElementById("corrected-p").innerHTML = CGshortP;
+
+                
+                    }
+                
+                    
+                    }
+                
+    
+                
+
+            </script>
+
+
+
+
+ <div class="calculator">
                 <h4 class="mono gray">ABV calculator</h4> 
             
             
@@ -139,111 +249,6 @@
  
                 </script>
     
-
-
-            <div class="calculator">
-                <h4 class="mono gray">Correct Gravity for Temperature</h4> 
-                
-                
-                <div id="calc-correct-p" style="display: block;">
-                    <label>Gravity:</label><br><br> 
-                        <div class="unit2">
-                            <input type="number" class="input1" name="input" id="gravity-p" placeholder="12"> 
-                            <p class="smallBlack">°P</p></div><br><br> 
-                    <label>Temperature of Liquid:</label><br><br> 
-                        <div class="unit1">
-                            <input type="number" class="input1" name="input" id="temp-p" placeholder="75" > 
-                            <p class="smallBlack">°F</p></div><br><br> 
-                    <label>Calibration Temp of Hydrometer:</label><br><br> 
-                        <div class="unit1">
-                            <input type="number" class="input1" name="input" id="cal-temp-p" value="68"> 
-                            <p class="smallBlack">°F</p></div><br><br> 
-                   
-                    <button class="button" onclick="tempCorrect()"><p class="smallBlack">enter</p></button><br>
-
-                     <label>Corrected gravity:</label><br><br> 
-                        <div class="answers2">
-                            <span class="answerText" id="corrected-p"> </span> 
-                            <span class="smallBlack">°P</span></div></div> 
-
-
-                            
-                <div id="calc-correct-s" style="display: none;">
-                    <label>Gravity:</label><br><br> 
-                    <div class="unit2">
-                        <input type="number" class="input1" name="input" id="gravity-s" placeholder="1.050"> 
-                        <p class="smallBlack">Specific Gravity</p></div><br><br> 
-                <label>Temperature of Liquid:</label><br><br> 
-                    <div class="unit1">
-                        <input type="number" class="input1" name="input" id="temp-s" placeholder="75"> 
-                        <p class="smallBlack">°F</p></div><br><br> 
-                <label>Calibration Temp of Hydrometer:</label><br><br> 
-                    <div class="unit1">
-                        <input type="number" class="input1" name="input" id="cal-temp-s" value="68"> 
-                        <p class="smallBlack">°F</p></div><br><br> 
-               
-                <button class="button" onclick="tempCorrect()"><p class="smallBlack">enter</p></button><br>
-
-                 <label>Corrected gravity:</label><br><br> 
-                    <div class="answers2">
-                        <span class="answerText" id="corrected-s"> </span> 
-                        <span class="smallBlack">Specific Gravity</span></div></div> 
-                        
-                </div>
-
-                </div>
-    <script>  
-        function changeUnitsCorrect() {
-            if (document.getElementById("plato").checked){
-                    document.getElementById("calc-correct-p").style = "display: block;";
-                    document.getElementById("calc-correct-s").style = "display: none;"}
-            if (document.getElementById("specific").checked){
-                        document.getElementById("calc-correct-s").style = "display: block;";
-                        document.getElementById("calc-correct-p").style = "display: none;"}
-
-
-        }
-        function tempCorrect() {
-            
-                       
-                
-                    if (document.getElementById("specific").checked){
-                       
-                        var r = document.getElementById('gravity-s').value;
-                        var t = document.getElementById('temp-s').value;
-                        var c = document.getElementById('cal-temp-s').value;
-           
-
-                       var  CGS = r * ((1.00130346 - (0.000134722124 * t) + (0.00000204052596 * t**2) - (0.00000000232820948 * t**3)) / (1.00130346 - (0.000134722124 * c) + (0.00000204052596 * c**2) - (0.00000000232820948 * c**3)))  ;                      
-                       var CGshortS = CGS.toFixed(4);
-                    document.getElementById("corrected-s").innerHTML = CGshortS;
-
-
-                    }
-                
-                    if (document.getElementById("plato").checked){
-                        let apb = Number(document.getElementById('gravity-p').value);
-                        let tP = (Number(document.getElementById('temp-p').value)-32)*(5/9);
-                        let cP = (Number(document.getElementById('cal-temp-p').value)-32)*(5/9);
-                        let temp = tP-cP;
-                        let correction =  0.0000006907947565 * temp**4 + 0.0000008650898228 * temp**3 * apb + 0.0000002111610273 * temp**2 * apb**2 - 0.000000420289855 * temp * apb**3 + 0.0000000000000000003388131789 * temp**4 - 0.00002646880494 * temp**3 - 0.00003812273795 * temp**2 * apb + 0.00002132555958 * temp * apb**2 + 0.0000003140096619 * apb**3 + 0.001470413886 * temp**2 + 0.0003854292164 * temp * apb - 0.00001254869767 * apb**2 + 0.04799327348 * temp + 0.0002013056055 * apb - 0.002157758291;
-                        let CGP = Number(apb)+Number(correction);
-                        console.log(CGP);
-                        console.log(apb);
-                        console.log(correction);
-                        var CGshortP = CGP.toFixed(4);
-                        document.getElementById("corrected-p").innerHTML = CGshortP;
-
-                
-                    }
-                
-                    
-                    }
-                
-    
-                
-
-            </script>
             
             <!-- <div class="calculator">
                 <h4 class="mono gray">gravity unit converter</h4> <br>
@@ -269,6 +274,7 @@
                     <div><p class="mono center svelte-13tvwy1">
                 <p><span class="medium green">Note:</span> Plato, brix, and balling are all very close to the same thing. They're all essentially the strenth of a solution as a percentage by mass. Plato corrects some minor errors in the brix scale, starting in the fifth decimal place, where brix was originally invented to correct similar errors in the balling scale, which is the oldest.</p>
         <script src="app.js"></script> -->
-    
+                   </div>
+ 
     </body>
     </html>
