@@ -1,20 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset='utf-8'>
-	<meta name='viewport' content='width=device-width,initial-scale=1'>
 
-	<title>drinkSquirrel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Semi+Condensed:wght@200;900&family=DM+Mono&display=swap" rel="stylesheet">    
+    <link rel="icon" type="image/x-icon" href="favicon.png">
 
-	<link rel='icon' type='image/png' href='/favicon.png'>
-	<link rel='stylesheet' href='/global.css'>
-	<link rel='stylesheet' href='/build/bundle.css'>
-
-	<script defer src='/build/bundle.js'></script>
-	
-    
 </head>
 
-<body>
-</body>
-</html>
+    <body>
+    
+        <div class="topnav">
+            <a class="active" href="index.html">Home</a>
+            <a href="index.html">Calculators</a>
+
+        </div>
+    
+        <h1 style="display: inline-block;" href ="index.html" class="light">drink<span class= "black orange">SQUIRREL</span></h1>
+        <img src="squirrel2.svg" alt="" style="width: 60px; display: inline-block; position: relative; top: 10px; right: 10px;">        
+        
+        <div class="orangebackground">
+        <h3 class="mono">calculator apps</h3>
+
+
+
+
+        <div class="unitBox" >
+            <label>
+                <input  type="radio" name="gravityUnits" value="12.2277" id="plato" onclick="changeUnitsABV()" checked="checked"> <p class="smallBlack">Degrees Plato</p>   </label> <br>
+            <label>
+                <input  type="radio" name="gravityUnits" value="1.0600" id="specific" onclick="changeUnitsABV()" ><p class="smallBlack">Specific Gravity</p></label> <br> 
+            </div><br>
+        </div>
+
+        <div class="grid-container" id="gridContainer">
+           
+           
+            
+
+            <div class="calculator">
+                <h4 class="mono gray">ABV calculator</h4> 
+            
+            
+            
+                <div id="calc-abv-plato" style="display: block;">
+
+                    <label>Original Gravity:</label><br> <br>
+                        <div class="unit1"><input type="number" class="input1" id="original-gravity-p" class="input1" name="original-gravity" placeholder="12.2"> 
+                            <p class="smallBlack">°P</p> </div><br> 
+                       
+                    <label>Final Gravity: </label><br> <br>
+                        <div class="unit1"><input type="number" class="input1" id="final-gravity-p" class="input1" name="final-gravity" placeholder="1.5"> 
+                        <p class="smallBlack">°P</p> </div><br> 
+                   
+                 <button class="button" onclick="abvFind()"><p class="smallBlack">enter</p></button><br>
+
+                    <label>Result:</label> <br> <br> 
+                        <div class="answers"><span class="answerText" id="abv-plato"></span><span class="smallBlack">% ABV</span><br></div> 
+                        <div class="answers2"><span class="answerText" id="Attenuation-plato"></span><span class="smallBlack">% Attenuation</span><br></div> 
+                    
+                                        
+                </div>
+                
+                
+
+
+                <div id="calc-abv-specific" style="display: none;">
+
+                    <label>Original Gravity:</label><br> <br>
+                        <div class="unit1"><input type="number" class="input1" id="original-gravity-s" class="input1" name="original-gravity" placeholder="1.059"> 
+                            <p class="smallBlack">Specific Gravity</p> </div><br> 
+                       
+                    <label>Final Gravity: </label><br> <br>
+                        <div class="unit1"><input type="number" class="input1" id="final-gravity-s" class="input1" name="final-gravity" placeholder="1.010"> 
+                        <p class="smallBlack">Specific Gravity</p> </div><br> 
+                   
+                 <button class="button" onclick="abvFind()"><p class="smallBlack">enter</p></button><br>
+
+                    <label>Result:</label> <br> <br> 
+                        <div class="answers"><span class="answerText" id="abv-specific"></span><span class="smallBlack">% ABV</span><br></div> 
+                        <div class="answers2"><span class="answerText" id="Attenuation-specific"></span><span class="smallBlack">% Attenuation</span><br></div> 
+                    
+                                        
+                </div>
+
+                    </div>
+        <script>  
+            function changeUnitsABV() {
+                if (document.getElementById("plato").checked){
+                        document.getElementById("calc-abv-plato").style = "display: block;";
+                        document.getElementById("calc-abv-specific").style = "display: none;"}
+                if (document.getElementById("specific").checked){
+                            document.getElementById("calc-abv-specific").style = "display: block;";
+                            document.getElementById("calc-abv-plato").style = "display: none;"}
+                            changeUnitsCorrect();
+
+            }
+            function abvFind() {
+              
+                          console.log("hi");
+                    
+                    
+                       if (document.getElementById("specific").checked){
+                        let OG = document.getElementById("original-gravity-s").value;
+                        let FG = document.getElementById("final-gravity-s").value;
+                        let ABVwhole = (OG - FG) * 131.25;
+                        var ABV = ABVwhole.toFixed(2);
+                        var AttenuationLong = 100*(OG-FG)/(OG-1);
+                        var Attenuation = AttenuationLong.toFixed(2);
+                        document.getElementById("abv-specific").innerHTML = ABV;
+                        document.getElementById("Attenuation-specific").innerHTML = Attenuation;
+
+                        console.log("specific");
+
+                      }
+                    
+                        if (document.getElementById("plato").checked){
+                            let OG = document.getElementById("original-gravity-p").value;
+                            let FG = document.getElementById("final-gravity-p").value;
+                            let ABVwhole = (OG - FG) * .516;
+                            var ABV = ABVwhole.toFixed(2);
+                            var AttenuationLong = 100*(OG-FG)/(OG);
+                            var Attenuation = AttenuationLong.toFixed(2);
+                            document.getElementById("abv-plato").innerHTML = ABV;
+                            document.getElementById("Attenuation-plato").innerHTML = Attenuation;
+
+                         console.log("plato");
+                    
+                        }
+                    
+                        
+                      }
+                    
+       
+                    
+ 
+                </script>
+    
+
+
+            <div class="calculator">
+                <h4 class="mono gray">Correct Gravity for Temperature</h4> 
+                
+                
+                <div id="calc-correct-p" style="display: block;">
+                    <label>Gravity:</label><br><br> 
+                        <div class="unit2">
+                            <input type="number" class="input1" name="input" id="gravity-p" placeholder="12"> 
+                            <p class="smallBlack">°P</p></div><br><br> 
+                    <label>Temperature of Liquid:</label><br><br> 
+                        <div class="unit1">
+                            <input type="number" class="input1" name="input" id="temp-p" placeholder="75" > 
+                            <p class="smallBlack">°F</p></div><br><br> 
+                    <label>Calibration Temp of Hydrometer:</label><br><br> 
+                        <div class="unit1">
+                            <input type="number" class="input1" name="input" id="cal-temp-p" value="68"> 
+                            <p class="smallBlack">°F</p></div><br><br> 
+                   
+                    <button class="button" onclick="tempCorrect()"><p class="smallBlack">enter</p></button><br>
+
+                     <label>Corrected gravity:</label><br><br> 
+                        <div class="answers2">
+                            <span class="answerText" id="corrected-p"> </span> 
+                            <span class="smallBlack">°P</span></div></div> 
+
+
+                            
+                <div id="calc-correct-s" style="display: none;">
+                    <label>Gravity:</label><br><br> 
+                    <div class="unit2">
+                        <input type="number" class="input1" name="input" id="gravity-s" placeholder="1.050"> 
+                        <p class="smallBlack">Specific Gravity</p></div><br><br> 
+                <label>Temperature of Liquid:</label><br><br> 
+                    <div class="unit1">
+                        <input type="number" class="input1" name="input" id="temp-s" placeholder="75"> 
+                        <p class="smallBlack">°F</p></div><br><br> 
+                <label>Calibration Temp of Hydrometer:</label><br><br> 
+                    <div class="unit1">
+                        <input type="number" class="input1" name="input" id="cal-temp-s" value="68"> 
+                        <p class="smallBlack">°F</p></div><br><br> 
+               
+                <button class="button" onclick="tempCorrect()"><p class="smallBlack">enter</p></button><br>
+
+                 <label>Corrected gravity:</label><br><br> 
+                    <div class="answers2">
+                        <span class="answerText" id="corrected-s"> </span> 
+                        <span class="smallBlack">Specific Gravity</span></div></div> 
+                        
+                </div>
+
+                </div>
+    <script>  
+        function changeUnitsCorrect() {
+            if (document.getElementById("plato").checked){
+                    document.getElementById("calc-correct-p").style = "display: block;";
+                    document.getElementById("calc-correct-s").style = "display: none;"}
+            if (document.getElementById("specific").checked){
+                        document.getElementById("calc-correct-s").style = "display: block;";
+                        document.getElementById("calc-correct-p").style = "display: none;"}
+
+
+        }
+        function tempCorrect() {
+            
+                       
+                
+                    if (document.getElementById("specific").checked){
+                       
+                        var r = document.getElementById('gravity-s').value;
+                        var t = document.getElementById('temp-s').value;
+                        var c = document.getElementById('cal-temp-s').value;
+           
+
+                       var  CGS = r * ((1.00130346 - (0.000134722124 * t) + (0.00000204052596 * t**2) - (0.00000000232820948 * t**3)) / (1.00130346 - (0.000134722124 * c) + (0.00000204052596 * c**2) - (0.00000000232820948 * c**3)))  ;                      
+                       var CGshortS = CGS.toFixed(4);
+                    document.getElementById("corrected-s").innerHTML = CGshortS;
+
+
+                    }
+                
+                    if (document.getElementById("plato").checked){
+                        let apb = Number(document.getElementById('gravity-p').value);
+                        let tP = (Number(document.getElementById('temp-p').value)-32)*(5/9);
+                        let cP = (Number(document.getElementById('cal-temp-p').value)-32)*(5/9);
+                        let temp = tP-cP;
+                        let correction =  0.0000006907947565 * temp**4 + 0.0000008650898228 * temp**3 * apb + 0.0000002111610273 * temp**2 * apb**2 - 0.000000420289855 * temp * apb**3 + 0.0000000000000000003388131789 * temp**4 - 0.00002646880494 * temp**3 - 0.00003812273795 * temp**2 * apb + 0.00002132555958 * temp * apb**2 + 0.0000003140096619 * apb**3 + 0.001470413886 * temp**2 + 0.0003854292164 * temp * apb - 0.00001254869767 * apb**2 + 0.04799327348 * temp + 0.0002013056055 * apb - 0.002157758291;
+                        let CGP = Number(apb)+Number(correction);
+                        console.log(CGP);
+                        console.log(apb);
+                        console.log(correction);
+                        var CGshortP = CGP.toFixed(4);
+                        document.getElementById("corrected-p").innerHTML = CGshortP;
+
+                
+                    }
+                
+                    
+                    }
+                
+    
+                
+
+            </script>
+            
+            <!-- <div class="calculator">
+                <h4 class="mono gray">gravity unit converter</h4> <br>
+                <div class="unit1"><input type="number" class="input1" name="input"> 
+                    <p class="smallBlack">Specific Gravity</p> </div><br> <div class="unit2">
+                        <input type="number" class="input1" name="input"> 
+                        <p class="smallBlack">°P</p></div><br> <p><span class="medium green"></div>
+            
+            <div class="calculator">
+                <h4 class="mono gray">Swap Liquid Malt Extract (LME) and Dry Malt Extract (DME)</h4> 
+                <div class="unit1"><input type="number" class="input1" name="input" max="1.629"> 
+                    <p class="smallBlack">lbs LME</p></div><br> 
+                    <div class="unit2"><input type="number" class="input1" name="input" max="100"> 
+                    <p class="smallBlack">lbs DME</p></div><br> <br> 
+                    <p><span class="medium green">Note:</span> Because liquid malt extract contains more water than dry malt extract, when you switch out the two in a recipe, you need to use more LME than you would DME to make up for that water weight. </p></div>
+            
+            <div class="calculator">
+                <h4 class="mono gray">Temperature Unit Converter</h4> 
+                <div class="unit1"><input class="input1"> 
+                    <p class="smallBlack">°F</p></div><br> 
+                    <div class="unit2"><input class="input1"> 
+                        <p class="smallBlack">°C</p></div><br></div> 
+                    <div><p class="mono center svelte-13tvwy1">
+                <p><span class="medium green">Note:</span> Plato, brix, and balling are all very close to the same thing. They're all essentially the strenth of a solution as a percentage by mass. Plato corrects some minor errors in the brix scale, starting in the fifth decimal place, where brix was originally invented to correct similar errors in the balling scale, which is the oldest.</p>
+        <script src="app.js"></script> -->
+    
+    </body>
+    </html>
